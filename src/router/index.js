@@ -1,7 +1,8 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import Home from "../views/Home.vue";
+import Layout from "../views/layout/index.vue";
 
-const routes = [
+export const defaultRoutes = [
   {
     path: "/",
     name: "Home",
@@ -27,12 +28,25 @@ const routes = [
     path: "/forget",
     name: "Forget",
     component: import("../views/forget/index.vue")
+  },
+  {
+    path: "/index",
+    name: "Index",
+    component: Layout
+  },
+  {
+    path: "/news",
+    name: "News",
+    component: Layout
   }
 ];
 
+// export const perRoutes = [
+//
+// ]
+// defaultRoutes.concat(perRoutes)
 const router = createRouter({
   history: createWebHashHistory(),
-  routes
+  routes: defaultRoutes
 });
-
 export default router;
