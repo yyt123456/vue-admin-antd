@@ -36,7 +36,7 @@
         </a-form-item>
       </a-form>
       <div class="center fs-12">
-        <router-link to="/forget" class="white">忘记密码</router-link> |
+        <router-link to="/register" class="white">注册</router-link> |
         <router-link to="/login" class="white">登录</router-link>
       </div>
     </div>
@@ -150,5 +150,5 @@
   };
 </script>
 <style lang="scss" scoped>
-  @import "styles/registger";
+  @import "styles/forget";
 </style>
