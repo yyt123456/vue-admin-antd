@@ -20,7 +20,7 @@
 <script>
   import {reactive, toRef, ref} from 'vue'
   import Header from './compoments/header'
-  import Aside from './compoments/aside'
+  import Aside from './compoments/aside/index'
   import Main from './compoments/main'
 
   export default {
