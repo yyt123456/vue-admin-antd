@@ -1,8 +1,8 @@
 <template>
   <div class="header">
     <div class="left">
-      <menu-unfold-outlined @click="setCollapsed" class="trigger"/>
-      <menu-fold-outlined @click="setCollapsed" class="trigger"/>
+      <menu-unfold-outlined @click="setCollapsed" class="trigger" v-if="isCollapsed"/>
+      <menu-fold-outlined @click="setCollapsed" class="trigger" v-else/>
     </div>
     <div class="right">
       <a-dropdown>
@@ -38,8 +38,9 @@
     MenuUnfoldOutlined,
     MenuFoldOutlined,
   } from '@ant-design/icons-vue';
-  import {reactive} from 'vue'
+  import {reactive, getCurrentInstance, computed} from 'vue'
   import {useI18n} from 'vue-i18n'
+  import {mapMutations, mapGetters} from 'vuex'
 
   export default {
     components: {
@@ -48,24 +49,30 @@
     },
     setup() {
       const {locale} = useI18n({useScope: 'global'})
+      const {ctx} = getCurrentInstance()
+      console.log(ctx.$store.getters.isCollapsed, '123')
       const data = reactive({
         langList: [
           {label: '中文', value: 'cn'},
           {label: 'En', value: 'en'},
         ],
-        lang: 'cn'
+        lang: 'cn',
       })
       const setLang = (val) => {
         locale.value = val
         data.lang = val
       }
+      const isCollapsed = computed(()=>{
+        return ctx.$store.getters.isCollapsed
+      })
       const setCollapsed = () => {
-
+        ctx.$store.commit('SETCOLLAPSED')
       }
       return {
         data,
         setCollapsed,
-        setLang
+        setLang,
+        isCollapsed
       }
     }
   }

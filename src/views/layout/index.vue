@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-layout style="height: 100vh">
-      <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
+      <a-layout-sider v-model:collapsed="isCollapsed" :trigger="null" collapsible>
         <Aside></Aside>
       </a-layout-sider>
       <a-layout>
@@ -18,7 +18,7 @@
   </div>
 </template>
 <script>
-  import {reactive, toRef, ref} from 'vue'
+  import {reactive, getCurrentInstance, computed} from 'vue'
   import Header from './compoments/header'
   import Aside from './compoments/aside/index'
   import Main from './compoments/main'
@@ -30,12 +30,16 @@
       Main,
     },
     setup() {
+      const {ctx} = getCurrentInstance()
       const data = reactive({
-        selectedKeys: ['1'],
-        collapsed: false,
+        selectedKeys: ['1']
+      })
+      const isCollapsed = computed(() => {
+        return ctx.$store.getters.isCollapsed
       })
       return {
-        ...toRef(data)
+        data,
+        isCollapsed
       }
     }
   }

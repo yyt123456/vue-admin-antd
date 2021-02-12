@@ -4,15 +4,16 @@
     <a-menu
       mode="inline"
       theme="dark"
-      v-model:openKeys="state.openKeys"
-      v-model:selectedKeys="state.selectedKeys"
+      v-model:openKeys="openKeys"
+      v-model:selectedKeys="selectedKeys"
       @click="selectPath"
       @openChange="selectSubPath"
     >
       <template v-for="item in routers">
         <template v-if="!item.hidden">
           <a-menu-item :key="item.path" v-if="!item.children">
-            <router-link :to="item.path">{{item.meta && item.meta.name}}</router-link>
+            <router-link :to="item.path"><span class="anticon"></span><span>{{item.meta && item.meta.name}}</span>
+            </router-link>
           </a-menu-item>
           <Aside v-else :menu="item" :key="item.path"/>
         </template>
@@ -21,7 +22,7 @@
   </div>
 </template>
 <script>
-  import {reactive, watch, toRef} from 'vue'
+  import {computed, getCurrentInstance} from 'vue'
   import {useRouter, useRoute} from "vue-router";
   import Aside from './aside'
 
@@ -30,24 +31,24 @@
       Aside
     },
     setup() {
+      const {ctx} = getCurrentInstance()
       const {options} = useRouter()
       const routers = options.routes
-      const state = reactive({
-        selectedKeys: localStorage.getItem('selectPath') ? [localStorage.getItem('selectPath')] : [],
-        openKeys: localStorage.getItem('selectSubPath') ? [localStorage.getItem('selectSubPath')] : [],
-      });
+      const selectedKeys = computed(()=>{
+        return ctx.$store.getters.selectedKeys
+      })
+      const openKeys = computed(()=>{
+        return ctx.$store.getters.openKeys
+      })
       const selectPath = ({item, key, keyPath}) => {
-        console.log(123)
-        state.selectedKeys = [key]
-        localStorage.setItem('selectPath', [key])
+        ctx.$store.commit('SET_SELECT_KEY', key)
       }
       const selectSubPath = (subPath) => {
-        console.log(456)
-        state.openKeys = subPath
-        localStorage.setItem('selectSubPath', subPath)
+        ctx.$store.commit('SET_OPEN_KEY', subPath)
       }
       return {
-        state,
+        openKeys,
+        selectedKeys,
         routers,
         selectPath,
         selectSubPath
