@@ -30,12 +30,12 @@
       Main,
     },
     setup() {
-      const {ctx} = getCurrentInstance()
+      const {proxy} = getCurrentInstance()
       const data = reactive({
         selectedKeys: ['1']
       })
       const isCollapsed = computed(() => {
-        return ctx.$store.getters.isCollapsed
+        return proxy.$store.getters.isCollapsed
       })
       return {
         data,

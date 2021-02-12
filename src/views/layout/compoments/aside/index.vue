@@ -31,20 +31,20 @@
       Aside
     },
     setup() {
-      const {ctx} = getCurrentInstance()
+      const {proxy} = getCurrentInstance()
       const {options} = useRouter()
       const routers = options.routes
       const selectedKeys = computed(()=>{
-        return ctx.$store.getters.selectedKeys
+        return proxy.$store.getters.selectedKeys
       })
       const openKeys = computed(()=>{
-        return ctx.$store.getters.openKeys
+        return proxy.$store.getters.openKeys
       })
       const selectPath = ({item, key, keyPath}) => {
-        ctx.$store.commit('SET_SELECT_KEY', key)
+        proxy.$store.commit('SET_SELECT_KEY', key)
       }
       const selectSubPath = (subPath) => {
-        ctx.$store.commit('SET_OPEN_KEY', subPath)
+        proxy.$store.commit('SET_OPEN_KEY', subPath)
       }
       return {
         openKeys,

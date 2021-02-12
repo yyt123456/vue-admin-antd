@@ -5,10 +5,11 @@ import store from "./store";
 import Antd from "ant-design-vue";
 import "ant-design-vue/dist/antd.css";
 import i18n from './lang'
-
+const app = createApp(App)
 createApp(App)
   .use(store)
   .use(router)
   .use(Antd)
   .use(i18n)
   .mount("#app");
+// app.config.globalProperties.$api = Api

@@ -11,7 +11,7 @@
           <a-input type="password" autocomplete="off" style="width: 300px"/>
         </a-form-item>
         <a-form-item>
-          <a-button type="primary" html-type="submit" block style="width: 300px"
+          <a-button type="primary" @click="submit" block style="width: 300px"
           >登录
           </a-button
           >
@@ -22,7 +22,8 @@
         </a-form-item>
       </a-form>
       <div class="center fs-12">
-        <router-link to="/forget" class="white" >忘记密码</router-link> |
+        <router-link to="/forget" class="white">忘记密码</router-link>
+        |
         <router-link to="/register" class="white">注册</router-link>
       </div>
     </div>
@@ -30,10 +31,11 @@
 </template>
 
 <script>
-    import {toRefs, reactive} from "vue";
+  import {toRefs, reactive} from "vue";
   import Captcha from "../../components/Captcha/index.vue";
+  import {GetCode} from '../../api/index'
 
-  export default{
+  export default {
     name: "Login",
     components: {
       Captcha
@@ -46,8 +48,15 @@
         }
       })
       const data = toRefs(initData)
+      const submit = () => {
+        console.log(123)
+        GetCode().then(res => {
+          console.log(res)
+        })
+      }
       return {
-        ...data
+        ...data,
+        submit
       };
     }
   };

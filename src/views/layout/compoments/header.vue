@@ -49,8 +49,8 @@
     },
     setup() {
       const {locale} = useI18n({useScope: 'global'})
-      const {ctx} = getCurrentInstance()
-      console.log(ctx.$store.getters.isCollapsed, '123')
+      const {proxy} = getCurrentInstance()
+      console.log(proxy.$store.getters.isCollapsed, '123')
       const data = reactive({
         langList: [
           {label: '中文', value: 'cn'},
@@ -63,10 +63,10 @@
         data.lang = val
       }
       const isCollapsed = computed(()=>{
-        return ctx.$store.getters.isCollapsed
+        return proxy.$store.getters.isCollapsed
       })
       const setCollapsed = () => {
-        ctx.$store.commit('SETCOLLAPSED')
+        proxy.$store.commit('SETCOLLAPSED')
       }
       return {
         data,
